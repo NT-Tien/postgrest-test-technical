@@ -15,15 +15,15 @@ services:
       timeout: 5s
       retries: 10
 
-  postgrest:
-    image: postgrest/postgrest:v12.2.0
+  hasura:
+    image: hasura/graphql-engine:v2.40.0
     environment:
-      PGRST_DB_URI: postgres://postgres:postgres@db:5432/appdb
-      PGRST_DB_SCHEMA: public
-      PGRST_DB_ANON_ROLE: web_anon
-      PGRST_OPENAPI_SERVER_PROXY_URI: http://localhost:3000
+      HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:postgres@db:5432/appdb
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
+      HASURA_GRAPHQL_DEV_MODE: "true"
+      HASURA_GRAPHQL_ADMIN_SECRET: mysecret
     ports:
-      - "3000:3000"
+      - "8080:8080"
     depends_on:
       db:
         condition: service_healthy
